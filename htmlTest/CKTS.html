@@ -1,0 +1,231 @@
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>出口退税率列表</title>
+<link href="/fagui/faguiresource/css/easycss.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<script type="text/javascript">
+	function doSubmit() {
+		document.searchForm.submit();
+	}
+	function goPage(num) {
+		if (num == 0) {
+			if (document.searchForm.cPage.value == "") {
+				alert("请输入您要跳转的页数!");
+			} else {
+				document.searchForm.submit();
+			}
+		} else {
+			document.searchForm.cPage.value = num;
+			document.searchForm.submit();
+		}
+	}
+	function keyPressMethod() {
+		if (window.event.keyCode<48 || window.event.keyCode>57)
+			event.returnValue = false;
+	}
+</script>
+</head>
+
+<body class="tundra">
+<form name="searchForm" id="searchForm" method="post"
+	action="../action/InitChukou.do"><input type="hidden"
+	name="orderField" id="orderField" value="articleField01"> <input
+	type="hidden" name="desc" id="desc" value="false">
+<input type="hidden" name="randCode" value="7dy54am7" />
+<table width="965" border="0" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td width="965"><img src="/fagui/faguiresource/img/images/bannner2.jpg" width="965"
+			height="130" /></td>
+	</tr>
+</table>
+<table width="965" border="0" align="center" cellpadding="0"
+	cellspacing="1" bgcolor="#C7C7C7">
+	<tr>
+		<td bgcolor="#FFFFFF">
+		<table id="pageUp" style="width: 965px;" align="center">
+			<tr>
+				<td width="40%" align="center" valign="middle">商品代码: <input
+					type="text" id="articleField01" name="articleField01"
+					style="width: 100px;" class="input4"
+					value="" /> 商品名称: <input
+					type="text" id="articleField02" name="articleField02"
+					style="width: 100px;" class="input4"
+					value="" /> <input type="image"
+					name="button3" id="button3" value="提交" src="/fagui/faguiresource/img/images/jians.gif"
+					width="52" height="18" /></td>
+				<td width="95" align="right"><span>页面大小 <input
+					name="pageSize" type="text" class="input4" id="pageSize"
+					maxlength="2" onkeypress="keyPressMethod()"
+					value="15" /> </span></td>
+				<td width="55" align="right"><span> <input type="image"
+					name="button" id="button" value="确认" src="/fagui/faguiresource/img/images/queren.gif" />
+				</span></td>
+				<td align="right">共9840条 656页 1/656   
+					<a href="javascript:goPage(2);"
+						title="下一页" class="xinwen"> 下一页</a>
+				 
+					<a href="javascript:goPage(656);"
+						title="末页" class="xinwen"> 末页</a> 转到
+              		 <span> <input name="cPage" id="cPage"
+					type="text" class="input4"
+					style="width: 30px; height: 12px; font: 12px/14px '宋体'"
+					onkeypress="keyPressMethod()" /> </span> 页</td>
+				<td width="45" align="center"><a href="javascript:goPage(0);"><img
+					src="/fagui/faguiresource/img/images/fgk_06.gif" width="28" height="17" border="0" /></a></td>
+
+			</tr>
+		</table>
+		</td>
+		</tr>
+</table>
+<table width="965" border="0" align="center" cellpadding="0"
+	cellspacing="1" bgcolor="#A8CDEC">
+	<tr>
+		<td width="18%" align="center" background="/fagui/faguiresource/img/images/fgk_10.gif"
+			class="font1">商品编码</td>
+		<td width="18%" align="center" background="/fagui/faguiresource/img/images/fgk_10.gif"
+			class="font1">商品名称</td>
+		<td width="16%" align="center" background="/fagui/faguiresource/img/images/fgk_10.gif"
+			class="font1">计量单位</td>
+		<td width="16%" align="center" background="/fagui/faguiresource/img/images/fgk_10.gif"
+			class="font1">增值税退税率%</td>
+	</tr>
+
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0101210010</td>
+			<td align="center" bgcolor="#FFFFFF">改良种用濒危野马</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0101210090</td>
+			<td align="center" bgcolor="#FFFFFF">其他改良种用马</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">5.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0101290010</td>
+			<td align="center" bgcolor="#FFFFFF">非改良种用濒危野马</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0101290090</td>
+			<td align="center" bgcolor="#FFFFFF">非改良种用其他马</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">5.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0101301010</td>
+			<td align="center" bgcolor="#FFFFFF">改良种用的濒危野驴</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0101301090</td>
+			<td align="center" bgcolor="#FFFFFF">改良种用的其他驴</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">5.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0101309010</td>
+			<td align="center" bgcolor="#FFFFFF">非改良种用濒危野驴</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0101309090</td>
+			<td align="center" bgcolor="#FFFFFF">非改良种用其他驴</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">5.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">01019000</td>
+			<td align="center" bgcolor="#FFFFFF">骡</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">5.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">01022100</td>
+			<td align="center" bgcolor="#FFFFFF">改良种用家牛</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">5.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">01022900</td>
+			<td align="center" bgcolor="#FFFFFF">其他家牛</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">5.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0102310010</td>
+			<td align="center" bgcolor="#FFFFFF">改良种用濒危水牛</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0102310090</td>
+			<td align="center" bgcolor="#FFFFFF">改良种用其他水牛</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">5.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0102390010</td>
+			<td align="center" bgcolor="#FFFFFF">非改良种用濒危水牛</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0.0</td>
+		</tr>
+	
+		<tr>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">0102390090</td>
+			<td align="center" bgcolor="#FFFFFF">非改良种用其他水牛</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">千克／头</td>
+			<td bgcolor="#FFFFFF" style="padding-left: 8px; margin: 0">5.0</td>
+		</tr>
+	
+
+</table>
+<table width="965" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr><td><font class="font16"></font></td></tr>
+</table>
+<table width="965" border="0" align="center" cellpadding="0"
+	cellspacing="0">
+	<tr>
+		<td height="40" align="center">&nbsp;</td>
+	</tr>
+	<tr>
+		<td height="40" align="center" bgcolor="#EFEFEF">国家税务总局办公厅主办
+		电子税务管理中心提供技术支持 航天四创软件公司提供软件平台</td>
+	</tr>
+</table>
+</form>
+</body>
+</html>

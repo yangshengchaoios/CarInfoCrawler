@@ -1,0 +1,54 @@
+PODS:
+  - AFNetworking (HEAD based on 2.5.4):
+    - AFNetworking/NSURLConnection (= HEAD based on 2.5.4)
+    - AFNetworking/NSURLSession (= HEAD based on 2.5.4)
+    - AFNetworking/Reachability (= HEAD based on 2.5.4)
+    - AFNetworking/Security (= HEAD based on 2.5.4)
+    - AFNetworking/Serialization (= HEAD based on 2.5.4)
+    - AFNetworking/UIKit (= HEAD based on 2.5.4)
+  - AFNetworking/NSURLConnection (HEAD based on 2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (HEAD based on 2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (HEAD based on 2.5.4)
+  - AFNetworking/Security (HEAD based on 2.5.4)
+  - AFNetworking/Serialization (HEAD based on 2.5.4)
+  - AFNetworking/UIKit (HEAD based on 2.5.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - BlocksKit (HEAD based on 2.2.5):
+    - BlocksKit/All (= HEAD based on 2.2.5)
+  - BlocksKit/All (HEAD based on 2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (HEAD based on 2.2.5)
+  - BlocksKit/DynamicDelegate (HEAD based on 2.2.5)
+  - BlocksKit/MessageUI (HEAD based on 2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (HEAD based on 2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - FMDB (HEAD based on 2.5):
+    - FMDB/standard (= HEAD based on 2.5)
+  - FMDB/common (HEAD based on 2.5)
+  - FMDB/standard (HEAD based on 2.5):
+    - FMDB/common
+
+DEPENDENCIES:
+  - AFNetworking (HEAD)
+  - BlocksKit (HEAD)
+  - FMDB (HEAD)
+
+SPEC CHECKSUMS:
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+
+COCOAPODS: 0.37.0
