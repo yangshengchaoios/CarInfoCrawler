@@ -20,6 +20,174 @@
 #define PrefixUrl @"http://car.autohome.com.cn/AsLeftMenu/As_LeftListNew.ashx"
 #define WeakSelfType __weak __typeof(&*self)
 
+
+//车型
+@interface Model : NSObject
+@property (nonatomic, assign) NSInteger brandId;//
+@property (nonatomic, assign) NSInteger seriesId;//
+@property (nonatomic, assign) NSInteger modelId;
+
+@property (nonatomic, strong) NSString *brandCode;
+@property (nonatomic, strong) NSString *seriesCode;
+
+@property (nonatomic, strong) NSString *modelYear;
+@property (nonatomic, strong) NSString *modelName;
+@property (nonatomic, strong) NSString *modelEngine;
+@property (nonatomic, strong) NSString *modelPrice;
+@property (nonatomic, assign) NSInteger onSale;
+- (NSString *)buildeInsertSql;
+@end
+@implementation Model
+- (NSString *)buildeInsertSql {
+    return [NSString stringWithFormat:@"INSERT INTO yckx_car_model(modelId,brandId,seriesId,modelYear,modelName,modelEngine,modelPrice,modelOnSale) VALUES(%ld,%ld,%ld,'%@','%@','%@','%@',%ld)",(long)self.modelId, (long)self.brandId, (long)self.seriesId,self.modelYear,self.modelName,self.modelEngine,self.modelPrice,(long)self.onSale];
+}
+@end
+
+//车系
+@interface SeriesModel : NSObject
+@property (nonatomic, assign) NSInteger brandId;//自动生成
+@property (nonatomic, assign) NSInteger seriesId;//自动生成
+@property (nonatomic, strong) NSString *seriesCode;
+@property (nonatomic, strong) NSString *brandCode;
+@property (nonatomic, strong) NSString *seriesName;
+@property (nonatomic, assign) NSInteger onSale;
+@property (nonatomic, strong) NSMutableArray *modelArray;//Model
+- (NSString *)buildeInsertSql;
+- (void)initModelArray;
+@end
+@implementation SeriesModel
+- (NSString *)buildeInsertSql {
+    return [NSString stringWithFormat:@"INSERT INTO yckx_car_series(seriesId,brandId,seriesName,seriesOnSale) VALUES(%ld,%ld,'%@',%ld)", (long)self.seriesId, (long)self.brandId,self.seriesName,(long)self.onSale];
+}
+- (void)initModelArray {
+    if (nil == self.modelArray) {
+        self.modelArray = [NSMutableArray array];
+    }
+    else {
+        [self.modelArray removeAllObjects];
+    }
+    FMDatabase *db = [FMDatabase databaseWithPath:DBCarRealPath];
+    if ([db open]) {
+        NSString *selectSql = [NSString stringWithFormat:@"SELECT * FROM temp_model WHERE seriesCode = '%@' ORDER BY modelId ASC", self.seriesCode];
+        FMResultSet *resultSet = [db executeQuery:selectSql];
+        while ([resultSet next]) {
+            Model *model = [Model new];
+            model.brandId = self.brandId;
+            model.seriesId = self.seriesId;
+            model.modelYear = [resultSet stringForColumn:@"modelYear"];
+            model.modelName = [resultSet stringForColumn:@"modelName"];
+            model.modelEngine = [resultSet stringForColumn:@"modelEngine"];
+            model.modelPrice = [resultSet stringForColumn:@"modelPrice"];
+            model.onSale = [resultSet intForColumn:@"onSale"];
+            [self.modelArray addObject:model];
+        }
+    }
+    [db close];
+}
+@end
+//车组
+@interface SubBrandModel : NSObject
+@property (nonatomic, assign) NSInteger brandId;//自动生成
+@property (nonatomic, assign) NSInteger brandParentId;//父级的brandId
+@property (nonatomic, strong) NSString *brandCode;
+@property (nonatomic, strong) NSString *brandName;
+@property (nonatomic, strong) NSString *pinyin;
+@property (nonatomic, assign) NSInteger onSale;
+@property (nonatomic, strong) NSMutableArray *seriesArray;//SeriesModel
+- (NSString *)buildeInsertSql;
+- (void)initSeriesArray;
+@end
+@implementation SubBrandModel
+- (NSString *)buildeInsertSql {
+    return [NSString stringWithFormat:@"INSERT INTO yckx_car_brand(brandId,brandName,brandPinyin,brandParentId,brandOnSale) VALUES(%ld,'%@','%@',%ld,%ld)", (long)self.brandId, self.brandName,self.pinyin,(long)self.brandParentId,(long)self.onSale];
+}
+- (void)initSeriesArray {
+    if (nil == self.seriesArray) {
+        self.seriesArray = [NSMutableArray array];
+    }
+    else {
+        [self.seriesArray removeAllObjects];
+    }
+    FMDatabase *db = [FMDatabase databaseWithPath:DBCarRealPath];
+    if ([db open]) {
+        NSString *selectSql = [NSString stringWithFormat:@"SELECT * FROM temp_series WHERE brandCode = '%@' ORDER BY seriesId ASC",
+                               self.brandCode];
+        FMResultSet *resultSet = [db executeQuery:selectSql];
+        while ([resultSet next]) {
+            SeriesModel *series = [SeriesModel new];
+            series.brandId = self.brandId;
+            series.brandCode = self.brandCode;
+            series.seriesCode = [resultSet stringForColumn:@"seriesCode"];
+            
+            series.seriesName = [resultSet stringForColumn:@"seriesName"];
+            series.onSale = [resultSet intForColumn:@"onSale"];
+            [self.seriesArray addObject:series];
+        }
+    }
+    [db close];
+}
+@end
+//品牌
+@interface BrandModel : NSObject
+@property (nonatomic, assign) NSInteger brandId;//自动生成
+@property (nonatomic, strong) NSString *brandCode;
+@property (nonatomic, strong) NSString *brandName;
+@property (nonatomic, strong) NSString *pinyin;
+@property (nonatomic, assign) NSInteger onSale;
+@property (nonatomic, strong) NSMutableArray *subBrandArray;//SubBrandModel
+- (NSString *)buildeInsertSql;
++ (NSMutableArray *)initBrandArray;
+- (void)initSubBrandArray;
+@end
+@implementation BrandModel
+- (NSString *)buildeInsertSql {
+    return [NSString stringWithFormat:@"INSERT INTO yckx_car_brand(brandId,brandName,brandPinyin,brandParentId,brandOnSale) VALUES(%ld,'%@','%@','%@',%ld)", (long)self.brandId, self.brandName,self.pinyin,@"0",(long)self.onSale];
+}
++ (NSMutableArray *)initBrandArray {
+    NSMutableArray *brandArray = [NSMutableArray array];
+    FMDatabase *db = [FMDatabase databaseWithPath:DBCarRealPath];
+    if ([db open]) {
+        NSString *selectSql = [NSString stringWithFormat:@"SELECT * FROM temp_brand ORDER BY brandId ASC"];
+        FMResultSet *resultSet = [db executeQuery:selectSql];
+        while ([resultSet next]) {
+            BrandModel *brand = [BrandModel new];
+            brand.brandCode = [resultSet stringForColumn:@"brandCode"];
+            brand.brandName = [resultSet stringForColumn:@"brandName"];
+            brand.pinyin = [resultSet stringForColumn:@"pinyin"];
+            brand.onSale = 1;
+            [brandArray addObject:brand];
+        }
+    }
+    [db close];
+    return brandArray;
+}
+- (void)initSubBrandArray {
+    if (nil == self.subBrandArray) {
+        self.subBrandArray = [NSMutableArray array];
+    }
+    else {
+        [self.subBrandArray removeAllObjects];
+    }
+    FMDatabase *db = [FMDatabase databaseWithPath:DBCarRealPath];
+    if ([db open]) {
+        NSString *selectSql = [NSString stringWithFormat:@"SELECT * FROM temp_brand1 WHERE parentCode = '%@' ORDER BY brandId ASC", self.brandCode];
+        FMResultSet *resultSet = [db executeQuery:selectSql];
+        while ([resultSet next]) {
+            SubBrandModel *subBrand = [SubBrandModel new];
+            subBrand.brandParentId = self.brandId;
+            subBrand.brandCode = [resultSet stringForColumn:@"brandCode"];
+            subBrand.brandName = [resultSet stringForColumn:@"brandName"];
+            subBrand.pinyin = [resultSet stringForColumn:@"pinyin"];
+            subBrand.onSale = [resultSet intForColumn:@"onSale"];
+            [self.subBrandArray addObject:subBrand];
+        }
+    }
+    [db close];
+}
+@end
+
+
+
 @implementation ServyouAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -31,13 +199,67 @@
     }
     [FileDefaultManager copyItemAtPath:DBCarProgramPath toPath:DBCarRealPath error:nil];
 
-    [self performSelectorInBackground:@selector(startRefreshModelList) withObject:nil];
+//    [self performSelectorInBackground:@selector(startRefreshModelList) withObject:nil];
+    
+    NSInteger brandStartId = [self selectLastRow:[NSString stringWithFormat:@"select brandId from yckx_car_brand order by brandId desc limit 0,1"]];
+    NSInteger seriesStartId = [self selectLastRow:[NSString stringWithFormat:@"select seriesId from yckx_car_series order by seriesId desc limit 0,1"]];
+    NSInteger modelStartId = [self selectLastRow:[NSString stringWithFormat:@"select modelId from yckx_car_model order by modelId desc limit 0,1"]];
+
+    //初始化品牌
+    NSArray *brandArray = [BrandModel initBrandArray];
+    for (BrandModel *brandModel in brandArray) {
+        NSInteger tempBrandId = [self checkExists:[NSString stringWithFormat:@"SELECT brandId FROM yckx_car_brand WHERE brandParentId = 0 AND brandName = '%@'", brandModel.brandName]];
+        if (-1 == tempBrandId) {//不存在
+            brandModel.brandId = brandStartId;
+            brandStartId++;
+            [self addNewRow:brandModel.buildeInsertSql filePath:[DocumentsPath stringByAppendingPathComponent:@"/failedLog"]];
+        }
+        else {
+            brandModel.brandId = tempBrandId;
+        }
+        
+        //初始化车组
+        [brandModel initSubBrandArray];
+        for (SubBrandModel *subBrand in brandModel.subBrandArray) {
+            NSInteger tempBrandId1 = [self checkExists:[NSString stringWithFormat:@"SELECT brandId FROM yckx_car_brand WHERE brandParentId = %ld AND brandName = '%@'", (long)subBrand.brandParentId, subBrand.brandName]];
+            if (-1 == tempBrandId1) {//不存在
+                subBrand.brandId = brandStartId;
+                brandStartId++;
+                [self addNewRow:subBrand.buildeInsertSql filePath:[DocumentsPath stringByAppendingPathComponent:@"/failedLog"]];
+            }
+            else {
+                subBrand.brandId = tempBrandId1;
+            }
+            
+            //初始化车系
+            [subBrand initSeriesArray];
+            for (SeriesModel *series in subBrand.seriesArray) {
+                NSInteger tempSeriesId = [self checkExists:[NSString stringWithFormat:@"SELECT seriesId FROM yckx_car_series WHERE brandId = %ld AND seriesName = '%@'", (long)subBrand.brandId, series.seriesName]];
+                if (-1 == tempSeriesId) {//不存在
+                    series.seriesId = seriesStartId;
+                    seriesStartId++;
+                    [self addNewRow:series.buildeInsertSql filePath:[DocumentsPath stringByAppendingPathComponent:@"/failedLog"]];
+                }
+                else {
+                    series.seriesId = tempSeriesId;
+                }
+                
+                //初始化车型
+                [series initModelArray];
+                for (Model *model in series.modelArray) {
+                    NSInteger tempModelId = [self checkExists:[NSString stringWithFormat:@"SELECT modelId FROM yckx_car_model WHERE brandId = %ld AND seriesId = %ld AND modelYear = '%@' AND modelName = '%@' AND modelEngine = '%@'", (long)model.brandId, (long)model.seriesId,model.modelYear,model.modelName,model.modelEngine]];
+                    if (-1 == tempModelId) {//不存在
+                        model.modelId = modelStartId;
+                        modelStartId++;
+                        [self addNewRow:model.buildeInsertSql filePath:[DocumentsPath stringByAppendingPathComponent:@"/failedLog"]];
+                    }
+                }
+            }
+        }
+    }
     
     return YES;
 }
-
-
-
 
 //--------------------------
 //
@@ -311,6 +533,19 @@
     [db close];
     return isSuccess;
 }
+- (NSInteger)checkExists:(NSString *)sql {
+    NSInteger tempId = -1;
+    FMDatabase *db = [FMDatabase databaseWithPath:DBCarRealPath];
+    if ([db open]) {
+        FMResultSet *resultSet = [db executeQuery:sql];
+        while ([resultSet next]) {
+            tempId = [resultSet intForColumnIndex:0];
+            break;
+        }
+    }
+    [db close];
+    return tempId;
+}
 - (NSString *)toPinYin:(NSString *)string {
     NSMutableString *mutableString = [NSMutableString stringWithString:string];
     CFStringTransform((CFMutableStringRef)mutableString, NULL, kCFStringTransformToLatin, false);
@@ -322,7 +557,18 @@
     }
     return [NSString stringWithString:firstLetterArray];
 }
-
+- (NSInteger)selectLastRow:(NSString *)selectSql {
+    NSInteger lastId = 0;
+    FMDatabase *db = [FMDatabase databaseWithPath:DBCarRealPath];
+    if ([db open]) {
+        FMResultSet *resultSet = [db executeQuery:selectSql];
+        while ([resultSet next]) {
+            lastId = [resultSet intForColumnIndex:0];
+        }
+    }
+    [db close];
+    return lastId + 1;
+}
 
 
 

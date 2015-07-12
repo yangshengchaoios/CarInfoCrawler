@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8C22E0A8-AE23-4CDD-8EE3-2A2567B24E10</string>
+	<key>IDESourceControlProjectName</key>
+	<string>htmlTest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>12F982E67BC8A5A54345E72D4EC018BD59B1B471</key>
+		<string>https://github.com/yangshengchaoios/CarInfoCrawler.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>htmlTest.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>12F982E67BC8A5A54345E72D4EC018BD59B1B471</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/yangshengchaoios/CarInfoCrawler.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>12F982E67BC8A5A54345E72D4EC018BD59B1B471</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>12F982E67BC8A5A54345E72D4EC018BD59B1B471</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CarInfoCrawler</string>
+		</dict>
+	</array>
+</dict>
+</plist>
