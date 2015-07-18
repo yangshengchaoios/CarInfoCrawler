@@ -37,9 +37,11 @@
 //    [self performSelectorInBackground:@selector(startRefreshBrandList) withObject:nil];
     //第三步：下载在售和停售的车型(更新表：yckx_car_model)
 //    [self performSelectorInBackground:@selector(startRefreshModelList) withObject:nil];//NOTE:这里要执行两次(在售+停售)
-    //第四步：更新model里的brandId(更新表：yckx_car_model)
+    //第四步：更新停售车型的modelEngine
+    [self performSelectorInBackground:@selector(startRefreshModelEngineList) withObject:nil];
+    //第五步：更新model里的brandId(更新表：yckx_car_model)
 //    UPDATE yckx_car_model SET brandId = (SELECT brandId FROM yckx_car_series WHERE yckx_car_model.seriesId = yckx_car_series.seriesId)
-    //第五步：压缩数据库。执行命令：VACUUM
+    //第六步：压缩数据库。执行命令：VACUUM
     
     NSLog(@"运行完成！");
     return YES;
@@ -238,6 +240,62 @@
             }];
 }
 
+
+//--------------------------
+//
+// 第四步：更新modelEngine
+//
+//--------------------------
+- (void)startRefreshModelEngineList {
+    NSArray *modelArray = [self modelArray];
+    for (NSString *modelId in modelArray) {
+        self.isFinished = NO;
+        [self performSelectorInBackground:@selector(refreshModelEngineList:) withObject:modelId];
+        while (NO == self.isFinished) {
+            [NSThread sleepForTimeInterval:1];
+        }
+    }
+}
+//调用方法：[self performSelectorInBackground:@selector(refreshModelEngineList) withObject:nil];
+- (void)refreshModelEngineList:(NSString *)modelId {
+    //http://www.autohome.com.cn/spec/2247
+    NSString *url = [NSString stringWithFormat:@"http://www.autohome.com.cn/spec/%@", modelId];
+    WeakSelfType blockSelf = self;
+    [AFNManager requestByUrl:url
+                   dictParam:@{}
+                 requestType:RequestTypeGET
+            requestSuccessed:^(id responseObject) {
+                NSString *responseString = [NSString stringWithFormat:@"%@", responseObject];
+//                TFHpple *doc = [TFHpple hppleWithHTMLData:[responseString dataUsingEncoding:NSUTF8StringEncoding] encoding:@"UTF-8"];
+                //<li><span>发&nbsp;动&nbsp;机：</span>
+//                NSInteger startIndex = [responseString substringFromIndex:1];
+                //<li class="cardetail-right"><span>变&nbsp;速&nbsp;箱：
+                
+                NSRange r1 = [responseString rangeOfString:@"<li><span>发&nbsp;动&nbsp;机：</span>"];
+                NSRange r2 = [responseString rangeOfString:@"<li class=\"cardetail-right\"><span>变&nbsp;速&nbsp;箱："];
+                NSRange rSub = NSMakeRange(r1.location + r1.length, r2.location - r1.location - r1.length);
+                NSString *modelEngine = [responseString substringWithRange:rSub];
+                modelEngine = [modelEngine stringByReplacingOccurrencesOfString:@"马力" withString:@"KW"];
+                modelEngine = [modelEngine stringByReplacingOccurrencesOfString:@"</li>" withString:@""];
+                if ([modelEngine rangeOfString:@"KW"].location != NSNotFound) {
+                    NSRange range = [modelEngine rangeOfString:@"KW"];
+                    modelEngine = [modelEngine substringToIndex:range.location + range.length];
+                }
+                NSString *logFilePath = [DocumentsPath stringByAppendingPathComponent:@"/failedLog"];//日志目录
+                if ([[NSFileManager defaultManager] fileExistsAtPath:logFilePath]) {
+                    [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:nil];
+                }
+                
+                NSString *updateSql = [NSString stringWithFormat:@"UPDATE yckx_car_model SET modelEngine = '%@' WHERE modelId = %@", modelEngine, modelId];
+                [blockSelf addNewRow:updateSql filePath:logFilePath];
+                blockSelf.isFinished = YES;
+            } requestFailure:^(NSInteger errorCode, NSString *errorMessage) {
+                blockSelf.isFinished = YES;
+                NSLog(@"errorMsg = %@", errorMessage);
+            }];
+}
+
+
 //--------------------------
 //
 // 公共方法
@@ -291,6 +349,21 @@
     NSMutableArray *array = [NSMutableArray array];
     if ([db open]) {
         NSString *selectSql = [NSString stringWithFormat:@"SELECT seriesId FROM yckx_car_series WHERE seriesId>=0 ORDER BY seriesId ASC"];
+        FMResultSet *resultSet = [db executeQuery:selectSql];
+        while ([resultSet next]) {
+            [array addObject:[resultSet stringForColumnIndex:0]];
+        }
+    }
+    [db close];
+    return array;
+}
+//查询出modelEngine为空的modelId
+- (NSArray *)modelArray {
+    NSString *dbPath = DBCarRealPath;
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
+    NSMutableArray *array = [NSMutableArray array];
+    if ([db open]) {
+        NSString *selectSql = [NSString stringWithFormat:@"SELECT modelId FROM yckx_car_model WHERE modelEngine = '' ORDER BY modelId ASC"];
         FMResultSet *resultSet = [db executeQuery:selectSql];
         while ([resultSet next]) {
             [array addObject:[resultSet stringForColumnIndex:0]];
