@@ -30,7 +30,8 @@
 		04D3F5FD19A59B1900755BA0 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D3F5FC19A59B1900755BA0 /* libxml2.2.dylib */; };
 		04D3F5FF19A59C9E00755BA0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04D3F5FE19A59C9E00755BA0 /* libxml2.dylib */; };
 		48ED9A32F58FD5D12F1FB241 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AAA8EC8E20D21A4F4CF9CA /* libPods.a */; };
-		D38668AC1B50DE0000F7467A /* yckx_car.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = D38668AB1B50DE0000F7467A /* yckx_car.sqlite */; };
+		D38668AC1B50DE0000F7467A /* yckx_car_new.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = D38668AB1B50DE0000F7467A /* yckx_car_new.sqlite */; };
+		D396E10E1B5901B400569708 /* yckx_car.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = D396E10D1B5901B400569708 /* yckx_car.sqlite */; };
 		D39B2CFB1B50CB42000C0038 /* AFNManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D39B2CFA1B50CB42000C0038 /* AFNManager.m */; };
 /* End PBXBuildFile section */
 
@@ -78,7 +79,8 @@
 		04D3F5FE19A59C9E00755BA0 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		34AAA8EC8E20D21A4F4CF9CA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A450FD201C7E009AEBE06D6F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		D38668AB1B50DE0000F7467A /* yckx_car.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = yckx_car.sqlite; sourceTree = "<group>"; };
+		D38668AB1B50DE0000F7467A /* yckx_car_new.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = yckx_car_new.sqlite; sourceTree = "<group>"; };
+		D396E10D1B5901B400569708 /* yckx_car.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = yckx_car.sqlite; sourceTree = "<group>"; };
 		D39B2CF91B50CB42000C0038 /* AFNManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNManager.h; sourceTree = "<group>"; };
 		D39B2CFA1B50CB42000C0038 /* AFNManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,7 +152,8 @@
 				04D3F5F219A5953500755BA0 /* TFHpple */,
 				04D3F5C719A594E400755BA0 /* ServyouAppDelegate.h */,
 				04D3F5C819A594E400755BA0 /* ServyouAppDelegate.m */,
-				D38668AB1B50DE0000F7467A /* yckx_car.sqlite */,
+				D396E10D1B5901B400569708 /* yckx_car.sqlite */,
+				D38668AB1B50DE0000F7467A /* yckx_car_new.sqlite */,
 				D39B2CF91B50CB42000C0038 /* AFNManager.h */,
 				D39B2CFA1B50CB42000C0038 /* AFNManager.m */,
 				04D3F5CA19A594E400755BA0 /* Main_iPhone.storyboard */,
@@ -298,8 +301,9 @@
 				04D3F5CF19A594E400755BA0 /* Main_iPad.storyboard in Resources */,
 				04D3F5D419A594E400755BA0 /* Images.xcassets in Resources */,
 				04D3F5CC19A594E400755BA0 /* Main_iPhone.storyboard in Resources */,
+				D396E10E1B5901B400569708 /* yckx_car.sqlite in Resources */,
 				04D3F5F119A594FB00755BA0 /* XYDJ.htm in Resources */,
-				D38668AC1B50DE0000F7467A /* yckx_car.sqlite in Resources */,
+				D38668AC1B50DE0000F7467A /* yckx_car_new.sqlite in Resources */,
 				04D3F5C319A594E400755BA0 /* InfoPlist.strings in Resources */,
 				0450C32B19A5C3E3000AA05F /* CKTS.html in Resources */,
 			);
